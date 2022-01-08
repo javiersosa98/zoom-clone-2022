@@ -31,8 +31,42 @@ navigator.mediaDevices.getUserMedia({
         connecToNewUser(userId, stream);
     })
 
+    // obtaining DOM elements from the NicknameForm Interface
+    const $nickForm = $("#nickForm");
+    const $nickError = $("#nickError");
+    const $nickname = $("#nickname");
+
+    $nickForm.submit((e) => {
+        e.preventDefault();
+
+        socket.emit("new-user", $nickname.val().trim(), (data) => {
+            if (data.ok) {
+                $("#nickWrap").hide();
+                // $('#contentWrap').show();
+                socket.nickname = $nickname.val();
+                document.querySelector("#contentWrap").style.display = "flex";
+                //$("#message").focus();
+            } else {
+                if (data.msg == "Username cannot be empty."){
+                    $nickError.html(`
+                        <div class="alert alert-danger">
+                            ${data.msg}
+                        </div>
+                    `);
+                } else {
+                    $nickError.html(`
+                        <div class="alert alert-danger">
+                            ${data.msg}
+                        </div>
+                    `);
+                }
+            }
+        });
+        $nickname.val("");
+    });
+
     // input value
-    let text = $('input');
+    let text = $('#chat_message');
     // when press enter send message
     $('html').keydown((e) => {
         if (e.which == 13 && text.val().length !== 0) {
@@ -41,8 +75,8 @@ navigator.mediaDevices.getUserMedia({
         }
     });
 
-    socket.on('createMessage', message => {
-        $('ul').append(`<li class="message"><b>user</b><br/>${message}</li>`);
+    socket.on('createMessage', data => {
+        $('ul').append(`<li class="message"><b>${data.nick}</b><br/>${data.msg}</li>`);
         scrollToBottom();
     })
 })

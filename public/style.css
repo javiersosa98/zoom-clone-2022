@@ -1,6 +1,50 @@
 body {
     margin: 0;
     padding: 0;
+    /*display: grid;
+    height: 100vh;
+    place-items: center;*/
+}
+
+.login {
+    display: grid;
+    place-items: center;
+    background-color: #242324;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.login__container {
+    padding: 100px;
+    text-align: center;
+    background-color: #2a292a;
+    border-radius: 10px;
+    box-shadow: 0 0px 10px rgba(61, 61, 66, 1);
+}
+
+.login__container > img {
+    object-fit: contain;
+    height: 100px;
+    margin-bottom: 25px;
+}
+
+.alert {
+    margin-bottom: 2rem !important; 
+}
+
+#nickname {
+    margin-top: 1rem;
+    border-color: #2494f4;
+}
+
+.button__login {
+    margin-top: 8px;
+    text-transform: inherit !important;
+    background-color: #2494f4 !important;
+    color: white;
 }
 
 #video-grid {
@@ -14,11 +58,12 @@ video {
     width: 400px;
     object-fit: cover;
     padding: 8px;
+    border-radius: 1rem;
 }
 
 .main {
     height: 100vh;
-    display: flex;
+    display: none;
 }
 
 .main__left {
@@ -106,6 +151,20 @@ video {
 .messages {
     color: white;
     list-style: none;
+}
+
+.message {
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    word-break: break-all; /* wrap extended text */
+}
+
+li:before {
+    content: "\f007"; /* FontAwesome Unicode */
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-left: -1.3em; /* same as padding-left set on li */
+    width: 1.3em; /* same as padding-left set on li */
 }
 
 .unmute, 

@@ -19,8 +19,31 @@
     
 </head>
 <body>
-    
-    <div class="main">
+
+    <div class="login" id="nickWrap">
+        <div class="login__container">
+            <p id="nickError"></p>
+
+            <img src="https://cdn.worldvectorlogo.com/logos/zoom-app.svg" alt="" />
+
+            <div class="login__text">
+                <h1>Sign in to Zoom</h1>
+            </div>
+
+            <form id="nickForm">
+                <div class="mb-3">
+                    <input id="nickname" type="text" class="form-control bg-dark text-white shadown-0"
+                    placeholder="myUsername" autofocus />
+                </div>
+                <!--<button type="submit" class="btn button__login">
+                    Login
+                </button>-->
+                <input type="submit" class="btn button__login" value="Login" />
+            </form>
+        </div>
+    </div>
+
+    <div class="main" id="contentWrap">
         <div class="main__left">
             <div class="main__videos">
                 <div id="video-grid">

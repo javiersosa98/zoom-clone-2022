@@ -7,6 +7,8 @@ const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, { 
     debug: true
 });
+let nicknames = []; // contains the names of the users
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
@@ -28,13 +30,31 @@ io.on('connection', socket => {
         // message
         socket.on('message', message => {
             // send message to the same room
-            io.to(roomId).emit('createMessage', message);
+            io.to(roomId).emit('createMessage', { 
+                msg: message,
+                nick: socket.nickname
+            });
         });
 
-        socket.on('disconnect', () => {
-            socket.broadcast.to(roomId).emit('user-disconnected', userId);
-        })
-    })
+        socket.on('new-user', (data, cb) => {
+            if (data == ""){
+                cb({ok: false, msg: "Username cannot be empty."});
+            } else if (nicknames.indexOf(data) != -1) {
+                cb({ok: false, msg: "That username already exists."});
+            } else {
+                cb({ok: true, msg: "Successful login."});
+                socket.nickname = data;
+                nicknames.push(socket.nickname);
+            }
+        });
+
+    });
+
+    socket.on('disconnect', () => {
+        if (!socket.nickname) return;
+        nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+        socket.broadcast.to(roomId).emit('user-disconnected', userId);
+    });
 })
 
 
